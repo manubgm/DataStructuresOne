@@ -42,6 +42,28 @@ void inserirFinal(Lista *lista, int valor){
 
 }
 
+void remover(Lista *lista, int valor){
+    No *inicio = lista->inicio;//nao posso perder a referencia para o inicio
+    No *noARemover = NULL;//ponteiro auxiliar
+    if(lista->inicio!=NULL&&lista->inicio->valor==valor){
+        noARemover = lista->inicio;//nao posso perder a referencia para o inicio
+        lista->inicio=noARemover->prox;//alterar o inicio
+        
+    }else{//tenho que percorrer minha lista para achar 
+        while(inicio!=NULL&&inicio->prox !=NULL &&inicio->prox->valor==valor){
+            noARemover = inicio->prox;
+            inicio->prox = noARemover->prox;
+        }
+
+    }
+
+    if(noARemover){//pq se for o primeiro o null vai ser ignorado e vai continuar com tamnho 0
+        free(noARemover);
+        lista->tam_lista--;
+    }
+
+}
+
 void imprime(Lista *lista){
     No *inicio = lista->inicio;
     while(inicio!=NULL){
@@ -62,6 +84,7 @@ int main(){
         printf("2. imprimir\n");
         printf("3. sair\n");
         printf("4. inserir no final\n");
+        printf("5. remover \n");
         scanf("%d",&op);
         switch(op){
             case 1: 
@@ -79,6 +102,12 @@ int main(){
                 printf("digite o valor inserido\n");
                 scanf("%d",&valor);
                 inserirFinal(&lista,valor);
+                break;
+            case 5:
+                printf("digite o valor a ser removido\n");
+                scanf("%d",&valor);
+                remover(&lista, valor);
+                break;
             default:
                 printf(">opcao invalida\n");
                 break;
